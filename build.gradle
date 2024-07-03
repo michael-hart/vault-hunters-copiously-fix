@@ -44,7 +44,6 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             property 'forge.logging.markers', 'REGISTRIES'
-//            TODO copy over mixin json
             arg "-mixin.config=copiousfix.mixin.json"
             property 'forge.logging.console.level', 'debug'
 
