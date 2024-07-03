@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.parchmentmc:librarian:1.+'
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath "org.spongepowered:mixingradle:${mixingradle_version}"
     }
 }
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
@@ -58,6 +58,7 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            arg '-mixin.config=copiousfix.mixin.json'
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
@@ -65,7 +66,7 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', 'copiousfix'
 
             mods {
-                examplemod {
+                copiousfix {
                     source sourceSets.main
                 }
             }
@@ -76,6 +77,7 @@ minecraft {
         // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
             workingDirectory project.file('run')
+            arg '-mixin.config=copiousfix.mixin.json'
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
@@ -90,6 +92,7 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+            arg '-mixin.config=copiousfix.mixin.json'
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
@@ -120,6 +123,12 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.2.9'
     implementation fg.deobf("curse.maven:vault-hunters-official-mod-458203:5413414")
+    // https://discord.com/channels/313125603924639766/725850371834118214/910619168821354497
+    // Prevent Mixin annotation processor from getting into IntelliJ's annotation processor settings
+    // This allows 'Settings > Build, Execution, and Deployment > Build Tools > Gradle > Build and run using' set to IntelliJ to work correctly
+    if (!Boolean.getBoolean('idea.sync.active')) {
+        annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+    }
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
@@ -137,7 +146,6 @@ jar {
                 "TweakOrder": 0,
                 "MixinConfigs" : "copiousfix.mixin.json"
         ])
-        rename 'mixin.refmap.json', 'copiousfix.mixin-refmap.json'
     }
 }
 
@@ -158,4 +166,14 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+mixin {
+    add sourceSets.main, 'copiousfix.mixin-refmap.json'
+}
+
+// Workaround for SpongePowered/MixinGradle#38
+afterEvaluate {
+    tasks.configureReobfTaskForReobfJar.mustRunAfter(tasks.compileJava)
+    tasks.configureReobfTaskForReobfJarJar.mustRunAfter(tasks.compileJava)
 }

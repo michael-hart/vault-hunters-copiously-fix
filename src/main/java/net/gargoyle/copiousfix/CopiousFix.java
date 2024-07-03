@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package net.gargoyle.copiousfix;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.Block;
