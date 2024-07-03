@@ -138,6 +138,7 @@ jar {
                 "TweakOrder": 0,
                 "MixinConfigs" : "copiousfix.mixin.json"
         ])
+        rename 'mixin.refmap.json', 'copiousfix.mixin-refmap.json'
     }
 }
 
