@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "net.gargoyle.copiousfix.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "CopiousStackMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "copiousfix.mixin-refmap.json"
+}

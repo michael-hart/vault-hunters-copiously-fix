@@ -1,15 +1,7 @@
-modLoader="javafml"
-loaderVersion="[40,)"
-license="MIT"
+# Vault Hunters Copiously Fix
 
-[[mods]]
-modId="copiousfix"
-version="${file.jarVersion}"
-displayName="Vault Hunters Copiously Fix"
-logoFile="copiouslyfix.png"
-authors="Gargoyle3333"
+![Logo](copiouslyfix.png)
 
-description='''
 This mod is a simple fix to the copiously bug, where copiously is capped at 100% unless standing very close to the drops
 or using ender anchor.
 
@@ -18,18 +10,8 @@ copiously. This happens very quickly after the gems drop on the floor.
 
 The fix is to create new versions of all the drops, so Minecraft knows they are separate entities. Exactly the same
 drops will be produced as in Vault Hunters, but created anew so they don't get tidied by Minecraft.
-'''
 
-[[dependencies.copiousfix]]
-modId="forge"
-mandatory=true
-versionRange="[40,)"
-ordering="NONE"
-side="BOTH"
+## Building
 
-[[dependencies.copiousfix]]
-modId="minecraft"
-mandatory=true
-versionRange="[1.18.2,1.19)"
-ordering="NONE"
-side="BOTH"
+To build the mod, check it out and run the `./gradlew build` command.
+The resulting jar will be in `./build/libs`.
