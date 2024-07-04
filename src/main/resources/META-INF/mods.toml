@@ -64,9 +64,9 @@ versionRange="[1.18.2,1.19)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.copiousfix]]
-modId="the_vault"
-mandatory=true
-versionRange="[1.18.2-3.11.0.3098,)"
-ordering="NONE"
-side="BOTH"
+#[[dependencies.copiousfix]]
+#modId="the_vault"
+#mandatory=true
+#versionRange="[1.18.2-3.11.0.3098,)"
+#ordering="NONE"
+#side="BOTH"

@@ -14,15 +14,14 @@ buildscript {
 }
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 plugins {
-    id 'eclipse'
-    id 'maven-publish'
+    id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'maven-publish'
 
-
-version = '1.0'
+version = '0.1.0'
 group = 'net.gargoyle.copiousfix' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'copiousfix'
 
@@ -176,4 +175,22 @@ mixin {
 afterEvaluate {
     tasks.configureReobfTaskForReobfJar.mustRunAfter(tasks.compileJava)
     tasks.configureReobfTaskForReobfJarJar.mustRunAfter(tasks.compileJava)
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = archivesBaseName
+
+            from components.java
+            fg.component(it)
+            jarJar.component(it)
+        }
+    }
+
+    repositories {
+        if (project.hasProperty('mavendir')) {
+            maven { url mavendir }
+        }
+    }
 }
