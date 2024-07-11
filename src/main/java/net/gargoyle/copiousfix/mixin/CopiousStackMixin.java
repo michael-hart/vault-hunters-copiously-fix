@@ -1,7 +1,6 @@
 package net.gargoyle.copiousfix.mixin;
 
 import iskallia.vault.block.VaultOreBlock;
-
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,7 +22,11 @@ public class CopiousStackMixin {
 
         List<ItemStack> replacementStack = new ArrayList<>();
         for (ItemStack stack : returned) {
-            replacementStack.add(new ItemStack(stack.getItem(), stack.getCount()));
+            ItemStack replacement = new ItemStack(stack.getItem(), stack.getCount());
+            if (stack.hasTag()) {
+                replacement.setTag(stack.getTag());
+            }
+            replacementStack.add(replacement);
         }
         cir.setReturnValue(replacementStack);
     }
